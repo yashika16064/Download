@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_download"
@@ -8,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.lenovo.download1.DownloadActivity">
+    tools:context="com.example.lenovo.download1.DownloadActivity"
+    >
 
     <EditText
         android:layout_width="match_parent"
@@ -16,16 +18,28 @@
         android:id="@+id/myUrl"
         android:layout_alignParentStart="true"
      />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myUrl"
+        android:layout_above="@id/activity_download">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/myText"
-        android:layout_below="@+id/myUrl"/>
+        /></ScrollView>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="myClickHandler"/>
+        android:onClick="myClickHandler"
+        android:id="@+id/download"/>
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/webview">
+
+    </WebView>
 </RelativeLayout>

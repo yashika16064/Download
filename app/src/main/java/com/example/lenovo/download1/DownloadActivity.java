@@ -1,3 +1,4 @@
+/* Reference taken from Class slides and android develper website*/
 package com.example.lenovo.download1;
 
 import android.app.Activity;
@@ -6,10 +7,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -74,7 +80,10 @@ public class DownloadActivity extends Activity{
 
         @Override
         protected void onPostExecute(String result) {
-            textView.setText(result);
+
+            Spanned htmlAsSpanned = Html.fromHtml(result);
+            textView.setText(htmlAsSpanned.toString());
+            Log.d(DEBUG_TAG,result);
         }
 
     }
@@ -82,20 +91,25 @@ public class DownloadActivity extends Activity{
     private String downloadUrl(String myurl) throws IOException
     {
         InputStream is = null;
-        int len =1000;
-        try {
-            URL url = new URL(myurl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.connect();
-            int response = conn.getResponseCode();
-            Log.d(DEBUG_TAG, "The response is: " + response);
-            is = conn.getInputStream();
-            String contentAsString = readIt(is, len);
-            return contentAsString;
+        int len =5000;
+//        try {
+//            URL url = new URL(myurl);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setReadTimeout(10000 /* milliseconds */);
+//            conn.setConnectTimeout(15000 /* milliseconds */);
+//            conn.setRequestMethod("GET");
+//            conn.setDoInput(true);
+//            conn.connect();
+//            int response = conn.getResponseCode();
+//            Log.d(DEBUG_TAG, "The response is: " + response);
+//            is = conn.getInputStream();
+//            String contentAsString = (readIt(is, len));
+//            return contentAsString;
+//        }
+        try{
+            Document doc= Jsoup.connect(myurl).get();
+            String text=doc.text();
+            return text;
         }
         finally {
             if (is != null) {
